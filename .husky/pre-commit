@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# The reason we're exporting this variable is because of this issue:
+# https://github.com/typicode/husky/issues/968
+export FORCE_COLOR=1
+
+echo '🔍🎨 Formatting and checking staged files before committing!'
+
+(pnpm install --frozen-lockfile && pnpm dlx lint-staged --allow-empty && pnpm run ci) ||
+(
+  echo '💀❌ Oops! The formatting and check process failed!';
+  false;
+)
+echo '🥳✅ Formatting and check completed successfully!'

@@ -1,0 +1,22 @@
+name: Update Develop Branch
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update Develop Branch
+        run: |
+          git checkout main
+          git fetch origin
+          git checkout develop
+          git pull
+          git merge origin/main -m "chore(merge): merge main into develop [skip ci]"
+          git push origin develop
